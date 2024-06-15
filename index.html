@@ -69,13 +69,18 @@
             }
             const shortcode = shortcodeMatch[1];
 
-            const response = await fetch(`/get-video-url?shortcode=${shortcode}`);
-            const data = await response.json();
-            
-            if (data.video_url) {
-                window.location.href = data.video_url;
-            } else {
-                document.getElementById('videoUrl').innerText = 'Video URL not found';
+            try {
+                const response = await fetch(`/get-video-url?shortcode=${shortcode}`);
+                const data = await response.json();
+                
+                if (data.video_url) {
+                    window.location.href = data.video_url;
+                } else {
+                    document.getElementById('videoUrl').innerText = 'Video URL not found';
+                }
+            } catch (error) {
+                document.getElementById('videoUrl').innerText = 'Error fetching video URL';
+                console.error('Error fetching video URL:', error);
             }
         }
     </script>
